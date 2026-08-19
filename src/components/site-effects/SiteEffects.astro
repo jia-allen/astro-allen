@@ -1,0 +1,379 @@
+---
+import { effectsConfig } from '@constants/site-config';
+
+const { mascot, clickFireworks, mouseTrail } = effectsConfig;
+---
+
+<div class="site-effects" data-fireworks-colors={JSON.stringify(clickFireworks.colors)}>
+  {mouseTrail.enabled && <canvas class="site-mouse-trail" aria-hidden="true"></canvas>}
+  {clickFireworks.enabled && <canvas class="site-fireworks" aria-hidden="true"></canvas>}
+  {
+    mascot.enabled && (
+      <img
+        class="site-mascot"
+        src={mascot.image}
+        width="600"
+        height="655"
+        alt=""
+        aria-hidden="true"
+        draggable="false"
+        loading="eager"
+        decoding="async"
+      />
+    )
+  }
+</div>
+
+<style>
+  @media (hover: hover) and (pointer: fine) {
+    :global(html.custom-cursor),
+    :global(html.custom-cursor body) {
+      cursor: url('/img/cursor-default.svg') 3 3, default;
+    }
+
+    :global(html.custom-cursor a),
+    :global(html.custom-cursor button),
+    :global(html.custom-cursor [role='button']),
+    :global(html.custom-cursor [onclick]),
+    :global(html.custom-cursor summary),
+    :global(html.custom-cursor label),
+    :global(html.custom-cursor select),
+    :global(html.custom-cursor img),
+    :global(html.custom-cursor .cursor-pointer) {
+      cursor: url('/img/cursor-link.svg') 14 4, pointer !important;
+    }
+
+    :global(html.custom-cursor input[type='text']),
+    :global(html.custom-cursor input[type='search']),
+    :global(html.custom-cursor input[type='email']),
+    :global(html.custom-cursor input[type='password']),
+    :global(html.custom-cursor input[type='url']),
+    :global(html.custom-cursor input[type='number']),
+    :global(html.custom-cursor textarea),
+    :global(html.custom-cursor [contenteditable='true']) {
+      cursor: text !important;
+    }
+
+    :global(html.custom-cursor button:disabled),
+    :global(html.custom-cursor [aria-disabled='true']) {
+      cursor: not-allowed !important;
+    }
+
+    :global(html.custom-cursor [draggable='true']) {
+      cursor: grab !important;
+    }
+
+    :global(html.custom-cursor [draggable='true']:active) {
+      cursor: grabbing !important;
+    }
+  }
+
+  .site-mouse-trail,
+  .site-fireworks {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .site-mouse-trail {
+    z-index: 999;
+  }
+
+  .site-fireworks {
+    z-index: 1000;
+  }
+
+  .site-mascot {
+    position: fixed;
+    right: 4.25rem;
+    bottom: 0.25rem;
+    z-index: 30;
+    display: none;
+    width: clamp(9.5rem, 12vw, 12.625rem);
+    height: auto;
+    user-select: none;
+    pointer-events: none;
+    filter: drop-shadow(0 0.75rem 1.125rem rgb(37 99 235 / 22%));
+    transform-origin: 50% 100%;
+    animation: mascot-float 4.8s ease-in-out infinite;
+  }
+
+  @media (min-width: 1024px) {
+    .site-mascot {
+      display: block;
+    }
+  }
+
+  @keyframes mascot-float {
+    0%,
+    100% {
+      transform: translateY(0) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-0.5625rem) rotate(1deg);
+    }
+  }
+
+  :global(html.motion-off) .site-mascot {
+    animation: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-mascot {
+      animation: none;
+    }
+
+    .site-mouse-trail {
+      display: none;
+    }
+  }
+
+  @media (hover: none), (pointer: coarse) {
+    .site-mouse-trail {
+      display: none;
+    }
+  }
+
+  :global(html.motion-off) .site-mouse-trail {
+    display: none;
+  }
+</style>
+
+{
+  (clickFireworks.enabled || mouseTrail.enabled) && (
+    <script>
+      interface Particle {
+        x: number;
+        y: number;
+        vx: number;
+        vy: number;
+        radius: number;
+        alpha: number;
+        color: string;
+      }
+
+      interface Ring {
+        x: number;
+        y: number;
+        radius: number;
+        alpha: number;
+        color: string;
+      }
+
+      interface TrailParticle {
+        positionX: number;
+        positionY: number;
+        previousX: number;
+        previousY: number;
+        shiftX: number;
+        shiftY: number;
+        offset: number;
+        speed: number;
+        size: number;
+        targetSize: number;
+        orbit: number;
+        color: string;
+      }
+
+      let fireworksCanvas: HTMLCanvasElement | null = null;
+      let fireworksContext: CanvasRenderingContext2D | null = null;
+      let trailCanvas: HTMLCanvasElement | null = null;
+      let trailContext: CanvasRenderingContext2D | null = null;
+      let particles: Particle[] = [];
+      let rings: Ring[] = [];
+      let animationFrame = 0;
+      let trailAnimationFrame = 0;
+      let trailParticles: TrailParticle[] = [];
+      let pointerX = window.innerWidth / 2;
+      let pointerY = window.innerHeight / 2;
+      let pointerActive = false;
+      let colors = ['255, 20, 97', '24, 255, 146', '90, 135, 255', '251, 243, 140'];
+      const trailColors = ['#ff8fad', '#80efb4', '#8eafff', '#f6e88e', '#ad9df5'];
+
+      function motionIsReduced() {
+        return document.documentElement.classList.contains('motion-off') ||
+          window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      }
+
+      function resizeCanvas() {
+        const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+        for (const [canvas, context] of [
+          [fireworksCanvas, fireworksContext],
+          [trailCanvas, trailContext],
+        ] as const) {
+          if (!canvas || !context) continue;
+          canvas.width = Math.round(window.innerWidth * pixelRatio);
+          canvas.height = Math.round(window.innerHeight * pixelRatio);
+          canvas.style.width = `${window.innerWidth}px`;
+          canvas.style.height = `${window.innerHeight}px`;
+          context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+        }
+      }
+
+      function renderFireworks() {
+        if (!fireworksContext || !fireworksCanvas) {
+          animationFrame = 0;
+          return;
+        }
+
+        fireworksContext.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+        for (const particle of particles) {
+          particle.x += particle.vx;
+          particle.y += particle.vy;
+          particle.vx *= 0.975;
+          particle.vy = particle.vy * 0.975 + 0.035;
+          particle.radius *= 0.965;
+          particle.alpha -= 0.018;
+
+          fireworksContext.beginPath();
+          fireworksContext.arc(particle.x, particle.y, Math.max(0.1, particle.radius), 0, Math.PI * 2);
+          fireworksContext.fillStyle = `rgba(${particle.color}, ${Math.max(0, particle.alpha)})`;
+          fireworksContext.fill();
+        }
+
+        for (const ring of rings) {
+          ring.radius += 2.6;
+          ring.alpha -= 0.035;
+          fireworksContext.beginPath();
+          fireworksContext.arc(ring.x, ring.y, ring.radius, 0, Math.PI * 2);
+          fireworksContext.lineWidth = Math.max(0.5, 4 * ring.alpha);
+          fireworksContext.strokeStyle = `rgba(${ring.color}, ${Math.max(0, ring.alpha)})`;
+          fireworksContext.stroke();
+        }
+
+        particles = particles.filter((particle) => particle.alpha > 0 && particle.radius > 0.1);
+        rings = rings.filter((ring) => ring.alpha > 0);
+
+        if (particles.length || rings.length) {
+          animationFrame = window.requestAnimationFrame(renderFireworks);
+        } else {
+          fireworksContext.clearRect(0, 0, window.innerWidth, window.innerHeight);
+          animationFrame = 0;
+        }
+      }
+
+      function createTrailParticles() {
+        trailParticles = Array.from({ length: 22 }, (_, index) => ({
+          positionX: pointerX,
+          positionY: pointerY,
+          previousX: pointerX,
+          previousY: pointerY,
+          shiftX: pointerX,
+          shiftY: pointerY,
+          offset: Math.random() * Math.PI * 2,
+          speed: 0.012 + Math.random() * 0.035,
+          size: 2 + Math.random() * 4,
+          targetSize: 3 + Math.random() * 6,
+          orbit: 26 + Math.random() * 48,
+          color: trailColors[index % trailColors.length],
+        }));
+      }
+
+      function renderMouseTrail() {
+        const context = trailContext;
+        if (!context || !trailCanvas || motionIsReduced()) {
+          context?.clearRect(0, 0, window.innerWidth, window.innerHeight);
+          trailAnimationFrame = window.requestAnimationFrame(renderMouseTrail);
+          return;
+        }
+
+        context.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        const orbitScale = pointerActive ? 1.35 : 1;
+
+        trailParticles.forEach((particle, index) => {
+          particle.previousX = particle.positionX;
+          particle.previousY = particle.positionY;
+          particle.offset += particle.speed;
+          particle.shiftX += (pointerX - particle.shiftX) * particle.speed;
+          particle.shiftY += (pointerY - particle.shiftY) * particle.speed;
+          particle.positionX = particle.shiftX + Math.cos(index + particle.offset) * particle.orbit * orbitScale;
+          particle.positionY = particle.shiftY + Math.sin(index + particle.offset) * particle.orbit * orbitScale;
+          particle.size += (particle.targetSize - particle.size) * 0.025;
+
+          if (Math.abs(particle.size - particle.targetSize) < 0.15) {
+            particle.targetSize = 3 + Math.random() * 6;
+          }
+
+          context.beginPath();
+          context.moveTo(particle.previousX, particle.previousY);
+          context.lineTo(particle.positionX, particle.positionY);
+          context.strokeStyle = `${particle.color}55`;
+          context.lineWidth = Math.max(1, particle.size * 0.35);
+          context.stroke();
+
+          context.beginPath();
+          context.arc(particle.positionX, particle.positionY, particle.size / 2, 0, Math.PI * 2);
+          context.fillStyle = particle.color;
+          context.fill();
+        });
+
+        trailAnimationFrame = window.requestAnimationFrame(renderMouseTrail);
+      }
+
+      function createFirework(x: number, y: number) {
+        const ringColor = colors[Math.floor(Math.random() * colors.length)];
+        rings.push({ x, y, radius: 3, alpha: 0.65, color: ringColor });
+
+        for (let index = 0; index < 22; index += 1) {
+          const angle = Math.random() * Math.PI * 2;
+          const speed = 2.5 + Math.random() * 4.5;
+          particles.push({
+            x,
+            y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            radius: 4 + Math.random() * 7,
+            alpha: 0.75 + Math.random() * 0.25,
+            color: colors[Math.floor(Math.random() * colors.length)],
+          });
+        }
+
+        if (!animationFrame) animationFrame = window.requestAnimationFrame(renderFireworks);
+      }
+
+      function handlePointerDown(event: PointerEvent) {
+        if (!event.isPrimary || (event.pointerType === 'mouse' && event.button !== 0)) return;
+        pointerActive = true;
+        if (!motionIsReduced() && fireworksCanvas) createFirework(event.clientX, event.clientY);
+      }
+
+      function handlePointerMove(event: PointerEvent) {
+        if (event.pointerType !== 'mouse') return;
+        pointerX = event.clientX;
+        pointerY = event.clientY;
+      }
+
+      function handlePointerUp() {
+        pointerActive = false;
+      }
+
+      function connectEffects() {
+        fireworksCanvas = document.querySelector<HTMLCanvasElement>('.site-fireworks');
+        fireworksContext = fireworksCanvas?.getContext('2d') ?? null;
+        trailCanvas = document.querySelector<HTMLCanvasElement>('.site-mouse-trail');
+        trailContext = trailCanvas?.getContext('2d') ?? null;
+        const root = document.querySelector<HTMLElement>('.site-effects');
+        try {
+          const configuredColors = JSON.parse(root?.dataset.fireworksColors ?? '[]');
+          if (Array.isArray(configuredColors) && configuredColors.length > 0) colors = configuredColors;
+        } catch {
+          // Keep the built-in palette when custom configuration is invalid.
+        }
+        if (trailCanvas && trailParticles.length === 0) createTrailParticles();
+        if (trailCanvas && !trailAnimationFrame) trailAnimationFrame = window.requestAnimationFrame(renderMouseTrail);
+        resizeCanvas();
+      }
+
+      connectEffects();
+      document.addEventListener('astro:page-load', connectEffects);
+      document.addEventListener('pointerdown', handlePointerDown, { passive: true });
+      document.addEventListener('pointermove', handlePointerMove, { passive: true });
+      document.addEventListener('pointerup', handlePointerUp, { passive: true });
+      document.addEventListener('pointercancel', handlePointerUp, { passive: true });
+      window.addEventListener('resize', resizeCanvas, { passive: true });
+    </script>
+  )
+}

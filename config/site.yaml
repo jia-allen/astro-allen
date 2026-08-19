@@ -16,11 +16,11 @@ site:
   subtitle: WA 的一声就哭了 # 网站副标题
   name: allen # 作者名称 - 请修改为你的名字
   description: FE / Agent探索中 / ENTJ但社恐 / 记录 / 不卷也不躺 # 网站描述
-  avatar: /img/avatar.webp # 网站头像
+  avatar: /img/avatar.png # 网站头像
   showLogo: true # 是否显示 Logo
   author: allen # 作者名称 - 请修改为你的名字
   url: https://allenjia.top/ # 站点 URL 用于 RSS 和 SEO
-  defaultOgImage: /img/avatar.webp # 默认 Open Graph 图片
+  defaultOgImage: /img/avatar.png # 默认 Open Graph 图片
   startYear: 2023 # 建站年份
   timezone: Asia/Shanghai # 时区配置 (IANA 格式)，用于日期显示和处理
   keywords: # SEO 关键词 (全局)
@@ -651,6 +651,26 @@ christmas:
   #   maxIterations: 8 # 最大迭代次数
   #   mobileMaxLayers: 4 # 移动端最大层数
   #   mobileMaxIterations: 6 # 移动端最大迭代次数
+
+# =============================================================================
+# Decorative Effects
+# 全站装饰效果
+# =============================================================================
+effects:
+  customCursor:
+    enabled: true
+  mascot:
+    enabled: true
+    image: /img/allen-mascot.webp
+  mouseTrail:
+    enabled: false
+  clickFireworks:
+    enabled: true
+    colors:
+      - '255, 20, 97'
+      - '24, 255, 146'
+      - '90, 135, 255'
+      - '251, 243, 140'
 
 # =============================================================================
 # Bangumi (Media Tracking)

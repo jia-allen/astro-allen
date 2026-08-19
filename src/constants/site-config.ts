@@ -21,6 +21,7 @@ import type {
   BgmAudioGroup,
   ChristmasConfig,
   CommentConfig,
+  DecorativeEffectsConfig,
   DevConfig,
   RouterItem,
   SocialConfig,
@@ -93,6 +94,25 @@ export const christmasConfig: ChristmasConfig = yamlConfig.christmas || {
     maxIterations: 8,
     mobileMaxLayers: 4,
     mobileMaxIterations: 6,
+  },
+};
+
+const decorativeEffects: DecorativeEffectsConfig = yamlConfig.effects ?? {};
+
+export const effectsConfig = {
+  customCursor: {
+    enabled: decorativeEffects.customCursor?.enabled ?? false,
+  },
+  mascot: {
+    enabled: decorativeEffects.mascot?.enabled ?? false,
+    image: decorativeEffects.mascot?.image ?? '/img/allen-mascot.webp',
+  },
+  clickFireworks: {
+    enabled: decorativeEffects.clickFireworks?.enabled ?? false,
+    colors: decorativeEffects.clickFireworks?.colors ?? ['255, 20, 97', '24, 255, 146', '90, 135, 255', '251, 243, 140'],
+  },
+  mouseTrail: {
+    enabled: decorativeEffects.mouseTrail?.enabled ?? false,
   },
 };
 

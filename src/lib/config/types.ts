@@ -566,6 +566,27 @@ export interface ChristmasConfig {
 }
 
 // =============================================================================
+// Decorative Effects
+// =============================================================================
+
+export interface DecorativeEffectsConfig {
+  customCursor?: {
+    enabled?: boolean;
+  };
+  mascot?: {
+    enabled?: boolean;
+    image?: string;
+  };
+  clickFireworks?: {
+    enabled?: boolean;
+    colors?: string[];
+  };
+  mouseTrail?: {
+    enabled?: boolean;
+  };
+}
+
+// =============================================================================
 // Dev Tools Configuration (Dev Only - Local Editor Integration)
 // =============================================================================
 
@@ -671,6 +692,8 @@ export interface SiteYamlConfig {
   /** Bangumi media tracking page — comment out to disable */
   bangumi?: BangumiConfig;
   christmas?: ChristmasConfig;
+  /** Site-wide decorative mascot and pointer effects */
+  effects?: DecorativeEffectsConfig;
   /** Development tools configuration (dev only) */
   dev?: DevConfig;
   /** Internationalization configuration */

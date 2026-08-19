@@ -18,7 +18,7 @@ interface Props extends PageMetaProps {
 
 import { ClientRouter } from 'astro:transitions';
 import UmamiAnalytics from '@components/analytics/UmamiAnalytics.astro';
-import { seoConfig } from '@constants/site-config';
+import { effectsConfig, seoConfig } from '@constants/site-config';
 import LoadingIndicator from 'astro-loading-indicator/component';
 import { Tooltips } from 'astro-tooltips';
 import { getHtmlLang, getLocaleFromUrl, stripLocaleFromPath } from '@/i18n';
@@ -44,7 +44,11 @@ const isPostPage = stripLocaleFromPath(Astro.url.pathname).startsWith('/post/');
 ---
 
 <!doctype html>
-<html transition:name="root" lang={getHtmlLang(locale)} class="vertical-scrollbar">
+<html
+  transition:name="root"
+  lang={getHtmlLang(locale)}
+  class:list={['vertical-scrollbar', { 'custom-cursor': effectsConfig.customCursor.enabled }]}
+>
   <head>
     <HeadMeta meta={meta} />
 

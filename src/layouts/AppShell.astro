@@ -23,6 +23,7 @@ import CodeBlockFullscreen from '@components/markdown/CodeBlockFullscreen';
 import DiagramFullscreen from '@components/markdown/DiagramFullscreen';
 import ImageLightbox from '@components/markdown/ImageLightbox';
 import SettingsPanel from '@components/settings/SettingsPanel';
+import SiteEffects from '@components/site-effects/SiteEffects.astro';
 import { Toaster } from '@components/ui/sonner';
 import { bgmConfig } from '@constants/site-config';
 
@@ -30,6 +31,9 @@ const { post, siderType, isPostPage } = Astro.props;
 ---
 
 <ChristmasEffects transition:persist="christmas-snowfall" />
+<div transition:persist="site-effects">
+  <SiteEffects />
+</div>
 <div class="flex min-h-screen flex-col text-black dark:text-white">
   <Header isPostPage={isPostPage} tocNumbering={post?.data.tocNumbering ?? true} />
   <main class="relative flex grow flex-col gap-4">
