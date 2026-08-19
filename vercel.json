@@ -1,0 +1,44 @@
+{
+  "redirects": [
+    {
+      "source": "/article/3c0c0c7f-bcef-807b-9d7a-e580bccf01d8",
+      "destination": "/post/agent-hermes",
+      "permanent": true
+    },
+    {
+      "source": "/article/3bbc0c7f-bcef-80ac-8159-e05f40ae48e1",
+      "destination": "/post/agent-llm-context-tools",
+      "permanent": true
+    },
+    {
+      "source": "/article/3c0c0c7f-bcef-801b-bd2f-fcc19ba62a62",
+      "destination": "/post/grand-narratives-and-real-people",
+      "permanent": true
+    },
+    {
+      "source": "/article/3c0c0c7f-bcef-8099-9d96-d049c5eadae8",
+      "destination": "/post/think-from-micro-perspective",
+      "permanent": true
+    },
+    {
+      "source": "/article/8d3c0c7f-bcef-836e-8e88-8115c420380d",
+      "destination": "/post/company-registration-pitfalls",
+      "permanent": true
+    },
+    {
+      "source": "/article/82cc0c7f-bcef-82e9-991c-816a13d23d38",
+      "destination": "/post/daily-necessities-buying-guide",
+      "permanent": true
+    },
+    {
+      "source": "/article/3bac0c7f-bcef-80bf-97df-e07b7ec61476",
+      "destination": "/post/practical-life-guide",
+      "permanent": true
+    },
+    {
+      "source": "/article/77cc0c7f-bcef-8231-ac9d-015af1e65fcc",
+      "destination": "/post/short-term-trading-system",
+      "permanent": true
+    }
+  ]
+}
