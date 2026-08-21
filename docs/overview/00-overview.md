@@ -231,7 +231,7 @@ export const siteConfig = {
   // 基本信息
   title: '余弦の博客',
   alternate: 'cosine',
-  subtitle: 'WA 的一声就哭了',
+  subtitle: 'FE → 全栈，从零到哭。',
   name: 'cos',
   description: 'FE / ACG / 手工 / 深色模式强迫症...',
 

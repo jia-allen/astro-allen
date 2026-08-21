@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
+  <g fill="none" stroke="#18265c" stroke-width="3" opacity="0.82">
+    <path d="M20 62 62 20h38L58 62l42 42H62L20 62Z"/>
+    <path d="m140 20 42 42-42 42h38l42-42-42-42h-38Z"/>
+    <path d="m20 178 42-42h38l-42 42 42 42H62l-42-42Z"/>
+    <path d="m140 136 42 42-42 42h38l42-42-42-42h-38Z"/>
+    <path d="M104 20h32v84h-32zM104 136h32v84h-32z"/>
+    <path d="M20 104h84v32H20zM136 104h84v32h-84z"/>
+  </g>
+</svg>

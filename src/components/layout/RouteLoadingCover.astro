@@ -1,0 +1,96 @@
+---
+interface Props {
+  brand: string;
+  caption: string;
+  avatar: string;
+}
+
+const { brand, caption, avatar } = Astro.props;
+---
+
+<route-loading-cover
+  id="route-loading-cover"
+  class="route-loading-cover"
+  role="status"
+  aria-live="polite"
+  aria-label="页面加载中"
+  aria-hidden="true"
+  hidden
+  transition:persist="route-loading-cover"
+>
+  <div class="route-loading-cover__pattern" aria-hidden="true">
+    <span class="route-loading-cover__brand">{brand}</span>
+  </div>
+
+  <div class="route-loading-cover__main">
+    <div class="route-loading-cover__progress" aria-hidden="true"><span></span></div>
+
+    <div class="route-loading-cover__portrait" aria-hidden="true">
+      <span class="route-loading-cover__orbit route-loading-cover__orbit--outer"></span>
+      <span class="route-loading-cover__orbit route-loading-cover__orbit--inner"></span>
+      <div class="route-loading-cover__window route-loading-cover__window--back"></div>
+      <div class="route-loading-cover__window route-loading-cover__window--front">
+        <div class="route-loading-cover__window-bar"><i></i><i></i><i></i></div>
+        <img src={avatar} width="112" height="112" alt="" />
+        <span class="route-loading-cover__code">&lt;/&gt;</span>
+      </div>
+    </div>
+
+    <p class="route-loading-cover__title" data-text="LOADING">LOADING</p>
+    <p class="route-loading-cover__caption">{caption}</p>
+  </div>
+</route-loading-cover>
+
+<script>
+  class RouteLoadingCover extends HTMLElement {
+    private hideTimer?: number;
+    private leaveTimer?: number;
+    private loadingStartedAt = 0;
+    private listening = false;
+
+    private readonly show = () => {
+      window.clearTimeout(this.hideTimer);
+      window.clearTimeout(this.leaveTimer);
+      this.loadingStartedAt = performance.now();
+      this.hidden = false;
+      this.classList.remove('is-leaving');
+      this.setAttribute('aria-hidden', 'false');
+    };
+
+    private readonly finish = () => {
+      if (this.hidden) return;
+
+      // Keep quick navigations visible long enough for the loading state to register.
+      const remaining = Math.max(0, 180 - (performance.now() - this.loadingStartedAt));
+      window.clearTimeout(this.leaveTimer);
+      this.leaveTimer = window.setTimeout(() => {
+        this.classList.add('is-leaving');
+        this.setAttribute('aria-hidden', 'true');
+        this.hideTimer = window.setTimeout(() => {
+          this.hidden = true;
+          this.classList.remove('is-leaving');
+        }, 1350);
+      }, remaining);
+    };
+
+    connectedCallback() {
+      if (this.listening) return;
+      this.listening = true;
+      document.addEventListener('astro:before-preparation', this.show);
+      document.addEventListener('astro:after-swap', this.finish);
+    }
+
+    disconnectedCallback() {
+      if (!this.listening) return;
+      this.listening = false;
+      document.removeEventListener('astro:before-preparation', this.show);
+      document.removeEventListener('astro:after-swap', this.finish);
+      window.clearTimeout(this.hideTimer);
+      window.clearTimeout(this.leaveTimer);
+    }
+  }
+
+  if (!customElements.get('route-loading-cover')) {
+    customElements.define('route-loading-cover', RouteLoadingCover);
+  }
+</script>

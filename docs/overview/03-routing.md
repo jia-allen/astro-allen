@@ -308,7 +308,7 @@ export async function GET(context: APIContext) {
   <channel>
     <title>余弦の博客</title>
     <link>https://blog.cosine.ren/</link>
-    <description>WA 的一声就哭了</description>
+    <description>FE → 全栈，从零到哭。</description>
     <item>
       <title>React Hooks 学习笔记</title>
       <link>https://blog.cosine.ren/post/react-hooks</link>

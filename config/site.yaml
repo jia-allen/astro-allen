@@ -13,7 +13,7 @@
 site:
   title: AI伦&博客 # 网站名称
   alternate: allen # 网站英文名称 用于页脚、Logo、@ handle 等
-  subtitle: WA 的一声就哭了 # 网站副标题
+  subtitle: FE → 全栈，从零到哭。 # 网站副标题
   name: allen # 作者名称 - 请修改为你的名字
   description: FE / Agent探索中 / ENTJ但社恐 / 记录 / 不卷也不躺 # 网站描述
   avatar: /img/avatar.png # 网站头像

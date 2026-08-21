@@ -87,7 +87,7 @@ pnpm preview
 site:
   title: 余弦の博客 # 网站标题
   alternate: cosine # 英文短名（用作 logo 文本）
-  subtitle: WA 的一声就哭了 # 副标题
+  subtitle: FE → 全栈，从零到哭。 # 副标题
   name: cos # 站点作者简称
   description: FE / ACG / 手工 / 深色模式强迫症 / INFP # 站点简介
   avatar: /img/avatar.webp # 头像路径

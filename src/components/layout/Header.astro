@@ -9,6 +9,7 @@ import { MAX_WIDTH } from '@constants/layout';
 import { christmasConfig, siteConfig } from 'constants/site-config';
 import { getLocaleFromUrl } from '@/i18n';
 import Navigator from './Navigator';
+import RouteLoadingCover from './RouteLoadingCover.astro';
 
 interface Props {
   isPostPage?: boolean;
@@ -16,9 +17,11 @@ interface Props {
 }
 
 const { isPostPage = false, tocNumbering = true } = Astro.props;
-const { alternate, title, showLogo } = siteConfig;
+const { alternate, avatar, title, showLogo } = siteConfig;
 const locale = getLocaleFromUrl(Astro.url.pathname);
 ---
+
+<RouteLoadingCover brand={alternate || title} caption={`${title} · 正在整理下一页`} avatar={avatar || '/img/avatar.png'} />
 
 <div
   id="site-header"
