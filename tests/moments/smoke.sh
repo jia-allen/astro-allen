@@ -74,6 +74,6 @@ wait "$fixture_pid" 2>/dev/null || true
 fixture_pid=''
 status="$(curl -sS -o /dev/null -w '%{http_code}' "$base/moments/daily?cursor=offline-unique")"
 [[ "$status" == '503' ]]
-curl -fsS "$base/post/hello-world" >/dev/null
+curl -fsS "$base/post/agent-hermes" >/dev/null
 
 printf 'Moments dynamic smoke passed\n'
