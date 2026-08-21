@@ -1,4 +1,5 @@
 ---
+import { siteConfig } from '@constants/site-config';
 import { buildTagPath } from '@lib/content';
 import { Icon } from 'astro-icon/components';
 import { localizedPath } from '@/i18n';
@@ -11,14 +12,14 @@ interface TagCount {
 interface Props {
   locale: string;
   tags: TagCount[];
+  postCount: number;
 }
 
-const { locale, tags } = Astro.props;
+const { locale, tags, postCount } = Astro.props;
 
 const copy =
   locale === 'en'
     ? {
-        roadmapEyebrow: "ALLEN'S ROADMAP",
         roadmapTitle: 'Growth path',
         roadmapDescription: 'Frontend · Backend · AI Agent',
         roadmapAction: 'View career plan',
@@ -29,7 +30,6 @@ const copy =
       }
     : locale === 'ja'
       ? {
-          roadmapEyebrow: "ALLEN'S ROADMAP",
           roadmapTitle: '成長ルート',
           roadmapDescription: 'Frontend · Backend · AI Agent',
           roadmapAction: 'キャリアプランを見る',
@@ -39,7 +39,6 @@ const copy =
           tagTitle: 'いま考えていること',
         }
       : {
-          roadmapEyebrow: "ALLEN'S ROADMAP",
           roadmapTitle: '成长路线',
           roadmapDescription: '前端 · 后端 · AI Agent',
           roadmapAction: '查看职业规划',
@@ -60,7 +59,6 @@ const copy =
         class="growth-route-face absolute inset-0 block overflow-hidden rounded-lg border border-[#465bd8] bg-[#5368e8] px-4 py-4 text-left shadow-sm"
       >
         <Icon name="ri:route-line" class="absolute right-2 top-1/2 size-20 -translate-y-1/2 text-white/15" aria-hidden="true" />
-        <span class="relative block text-[0.65rem] font-bold text-white/70">{copy.roadmapEyebrow}</span>
         <span class="relative mt-1 block text-2xl font-black">{copy.roadmapTitle}</span>
         <span class="relative mt-2 block max-w-48 text-sm/5 font-medium text-white/90">{copy.roadmapDescription}</span>
       </span>
@@ -72,6 +70,43 @@ const copy =
       </span>
     </span>
   </a>
+
+  <site-analytics
+    class="site-analytics relative block w-full overflow-hidden rounded-lg border border-[#e7eaf0] bg-white/70 px-4 py-4 text-left shadow-sm dark:border-white/10 dark:bg-white/5"
+    data-established-at={siteConfig.establishedAt ?? `${siteConfig.startYear ?? new Date().getFullYear()}-01-01`}
+    data-site-url={siteConfig.site}
+    data-visit-offset={siteConfig.siteVisitOffset ?? 0}
+    data-visitor-offset={siteConfig.siteVisitorOffset ?? 0}
+    data-production={import.meta.env.PROD ? 'true' : 'false'}
+  >
+    <div class="relative z-10 border-b border-dashed border-[#dfe3ea] pb-3 dark:border-white/10">
+      <p class="text-[0.65rem] font-bold text-[#6375e6] dark:text-[#aeb8ff]">
+        {locale === 'en' ? 'SITE NOTES' : locale === 'ja' ? 'サイト記録' : '站点记录'}
+      </p>
+      <h2 class="mt-1 text-base/5 font-bold text-[#3d4759] dark:text-[#f3f4f6]">
+        {locale === 'en' ? 'A record in progress' : locale === 'ja' ? '積み重ねの記録' : '持续积累中'}
+      </h2>
+    </div>
+    <dl class="relative z-10 mt-3 space-y-2 text-sm">
+      <div class="flex items-center justify-between gap-4">
+        <dt class="text-[#7f899a] dark:text-[#a5acb8]">{locale === 'en' ? 'Posts' : locale === 'ja' ? '記事数' : '文章数'}</dt>
+        <dd class="font-semibold text-[#3d4759] dark:text-[#f3f4f6]">{postCount}</dd>
+      </div>
+      <div class="flex items-center justify-between gap-4">
+        <dt class="text-[#7f899a] dark:text-[#a5acb8]">{locale === 'en' ? 'Days online' : locale === 'ja' ? '運営日数' : '建站天数'}</dt>
+        <dd class="font-semibold text-[#3d4759] dark:text-[#f3f4f6]"><span data-site-days>--</span>{locale === 'en' ? ' days' : locale === 'ja' ? ' 日' : ' 天'}</dd>
+      </div>
+      <div class="flex items-center justify-between gap-4">
+        <dt class="text-[#7f899a] dark:text-[#a5acb8]">{locale === 'en' ? 'Page views' : locale === 'ja' ? '全体アクセス' : '全站访问量'}</dt>
+        <dd class="font-semibold text-[#3d4759] dark:text-[#f3f4f6]" data-site-pageviews>--</dd>
+      </div>
+      <div class="flex items-center justify-between gap-4">
+        <dt class="text-[#7f899a] dark:text-[#a5acb8]">{locale === 'en' ? 'Visitors' : locale === 'ja' ? '訪問者数' : '访客数'}</dt>
+        <dd class="font-semibold text-[#3d4759] dark:text-[#f3f4f6]" data-site-visitors>--</dd>
+      </div>
+    </dl>
+    <img src="/img/allen-mascot.webp" alt="" aria-hidden="true" class="pointer-events-none absolute -right-5 -bottom-8 w-28 opacity-20 dark:opacity-15" />
+  </site-analytics>
 
   <section class="border-border/70 bg-card/60 w-full rounded-lg border px-4 py-4 text-left shadow-sm">
     <div class="flex items-center gap-3">
@@ -100,6 +135,106 @@ const copy =
     )}
   </section>
 </div>
+
+<script>
+  type BusuanziStats = {
+    site_pv?: number | string;
+    site_uv?: number | string;
+  };
+
+  type AnalyticsWindow = Window & {
+    __siteAnalyticsReady?: boolean;
+  };
+
+  function formatCount(value: unknown, offset: number): string {
+    const count = Number(value);
+    return Number.isFinite(count) ? (count + offset).toLocaleString() : '--';
+  }
+
+  function setSiteCounters(container: HTMLElement, stats?: BusuanziStats) {
+    const pageviews = container.querySelector<HTMLElement>('[data-site-pageviews]');
+    const visitors = container.querySelector<HTMLElement>('[data-site-visitors]');
+    const visitOffset = Number(container.dataset.visitOffset ?? 0);
+    const visitorOffset = Number(container.dataset.visitorOffset ?? 0);
+
+    if (pageviews) pageviews.textContent = stats ? formatCount(stats.site_pv, visitOffset) : '--';
+    if (visitors) visitors.textContent = stats ? formatCount(stats.site_uv, visitorOffset) : '--';
+  }
+
+  function setSiteDays(container: HTMLElement) {
+    const element = container.querySelector<HTMLElement>('[data-site-days]');
+    const establishedAt = container.dataset.establishedAt;
+    if (!element || !establishedAt) return;
+
+    const start = new Date(`${establishedAt}T00:00:00`);
+    if (Number.isNaN(start.getTime())) return;
+
+    const days = Math.max(1, Math.ceil((Date.now() - start.getTime()) / 86_400_000));
+    element.textContent = days.toLocaleString();
+  }
+
+  function loadBusuanzi(container: HTMLElement) {
+    const siteUrl = container.dataset.siteUrl;
+    const isProduction = container.dataset.production === 'true';
+    if (!siteUrl || !isProduction) {
+      setSiteCounters(container);
+      return;
+    }
+
+    let host: string;
+    try {
+      host = new URL(siteUrl).hostname;
+    } catch {
+      setSiteCounters(container);
+      return;
+    }
+
+    if (window.location.hostname !== host) {
+      setSiteCounters(container);
+      return;
+    }
+
+    const callbackName = `siteAnalytics${Date.now()}${Math.random().toString(36).slice(2)}`;
+    const callbackWindow = window as unknown as Record<string, unknown>;
+    const script = document.createElement('script');
+    const timeout = window.setTimeout(() => {
+      setSiteCounters(container);
+      script.remove();
+      delete callbackWindow[callbackName];
+    }, 4_000);
+
+    callbackWindow[callbackName] = (stats: BusuanziStats) => {
+      window.clearTimeout(timeout);
+      setSiteCounters(container, stats);
+      script.remove();
+      delete callbackWindow[callbackName];
+    };
+
+    script.async = true;
+    script.src = `https://busuanzi.ibruce.info/busuanzi?jsonpCallback=${callbackName}`;
+    script.onerror = () => {
+      window.clearTimeout(timeout);
+      setSiteCounters(container);
+      delete callbackWindow[callbackName];
+    };
+    document.head.appendChild(script);
+  }
+
+  function initSiteAnalytics() {
+    document.querySelectorAll<HTMLElement>('site-analytics:not([data-site-analytics-ready])').forEach((container) => {
+      container.dataset.siteAnalyticsReady = 'true';
+      setSiteDays(container);
+      loadBusuanzi(container);
+    });
+  }
+
+  const analyticsWindow = window as AnalyticsWindow;
+  initSiteAnalytics();
+  if (!analyticsWindow.__siteAnalyticsReady) {
+    analyticsWindow.__siteAnalyticsReady = true;
+    document.addEventListener('astro:page-load', initSiteAnalytics);
+  }
+</script>
 
 <style>
   .growth-route {

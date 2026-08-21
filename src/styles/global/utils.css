@@ -30,11 +30,11 @@
 @utility with-background {
   &#site-header {
     color: currentColor;
-    @apply border-border text-foreground border-b;
+    @apply border-border text-foreground border-b backdrop-blur-xl;
 
     /* Show gradient background via pseudo-element opacity */
     &::before {
-      @apply opacity-100;
+      @apply opacity-90;
     }
 
     button,

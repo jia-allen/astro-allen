@@ -22,6 +22,9 @@ site:
   url: https://allenjia.top/ # 站点 URL 用于 RSS 和 SEO
   defaultOgImage: /img/avatar.png # 默认 Open Graph 图片
   startYear: 2023 # 建站年份
+  establishedAt: "2023-12-26" # 建站日期，用于计算网站运行天数
+  siteVisitOffset: 300 # 不蒜子统计展示用的历史访问基数，设为 0 显示真实统计
+  siteVisitorOffset: 50 # 不蒜子统计展示用的历史访客基数，设为 0 显示真实统计
   timezone: Asia/Shanghai # 时区配置 (IANA 格式)，用于日期显示和处理
   keywords: # SEO 关键词 (全局)
     - 博客
@@ -686,10 +689,10 @@ effects:
 #   label: 导航显示名称（可选，默认：追番）
 #   icon: 导航图标，Iconify 格式（可选，默认：ri:bilibili-fill）
 # -----------------------------------------------------------------------------
-bangumi:
-  userId: cosine
-  # label: 追番
-  # icon: ri:bilibili-fill
+# bangumi:
+#   userId: cosine
+#   label: 追番
+#   icon: ri:bilibili-fill
 
 # =============================================================================
 # Development Tools (Dev Only)

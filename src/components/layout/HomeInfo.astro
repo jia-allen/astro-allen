@@ -31,7 +31,7 @@ const featuredTags = allTags.toSorted((a, b) => b.count - a.count || a.tag.local
 
 // 生成唯一 ID 前缀
 const uniqueId = `home-info-${Math.random().toString(36).substring(2, 11)}`;
-const { className } = Astro.props;
+const { className, isDrawer = false } = Astro.props;
 
 // Filter navigation items to exclude disabled series
 const filteredRouters = filterNavItems(routers, configuredSeriesSlugs, enabledSeriesSlugs, RESERVED_ROUTES);
@@ -73,8 +73,9 @@ const strippedPath = stripLocaleFromPath(Astro.url.pathname);
       {t(locale, 'homeInfo.tags')}
     </a>
   </div>
-  <SidebarHighlights locale={locale} tags={featuredTags} />
-  <div class="mt-5 flex w-full flex-col items-center gap-2.5">
+  <SidebarHighlights locale={locale} tags={featuredTags} postCount={postCount} />
+  {isDrawer && (
+  <div class="mt-5 flex w-full flex-col items-center gap-2">
     {
       filteredRouters.map((item, index) => {
         const displayName = resolveNavName(item.nameKey, item.name, locale);
@@ -82,11 +83,11 @@ const strippedPath = stripLocaleFromPath(Astro.url.pathname);
           const collapseId = `${uniqueId}-collapse-${index}`;
           return (
             <div
-              class="flex w-40 flex-col rounded-lg border border-[#e7eaf0] bg-white/55 text-[#4b5563] transition-colors duration-200 hover:border-[#d9deea] hover:bg-white/80 dark:border-white/10 dark:bg-white/5 dark:text-[#b1b7c2] dark:hover:bg-white/8"
+              class="flex w-40 flex-col rounded-md border border-[#e7eaf0] bg-white/40 text-[#4b5563] transition-colors duration-200 hover:border-[#d9deea] hover:bg-white/70 dark:border-white/10 dark:bg-white/4 dark:text-[#b1b7c2] dark:hover:bg-white/7"
               data-collapsible
             >
               <button
-                class="flex-center h-11 w-full cursor-pointer rounded-lg transition-colors hover:text-[#5368e8] dark:hover:text-[#9bacff]"
+                class="flex-center h-10 w-full cursor-pointer rounded-md transition-colors hover:text-[#5368e8] dark:hover:text-[#9bacff]"
                 data-collapse-trigger={collapseId}
                 aria-expanded="false"
                 aria-label={t(locale, 'common.menuLabel', { name: displayName })}
@@ -115,9 +116,10 @@ const strippedPath = stripLocaleFromPath(Astro.url.pathname);
                         label={childName}
                         variant="unstyle"
                         className={cn(
-                          'h-11 w-40 rounded-lg text-sm font-medium text-[#4056d6] transition-colors duration-200 dark:text-[#aeb8ff]',
+                          'h-10 w-40 rounded-md text-sm font-medium text-[#4056d6] transition-colors duration-200 dark:text-[#aeb8ff]',
                           {
-                            'bg-[#eef1ff] dark:bg-[#5368e8]/18': child.path === strippedPath,
+                            'bg-[#f5f6ff] ring-1 ring-[#e5e9ff] ring-inset dark:bg-[#5368e8]/14 dark:ring-[#6f80ec]/20':
+                              child.path === strippedPath,
                             'text-[#697386] hover:bg-[#f3f5f8] hover:text-[#4056d6] dark:text-[#9aa3b2] dark:hover:bg-white/6 dark:hover:text-[#aeb8ff]':
                               child.path !== strippedPath,
                           },
@@ -140,9 +142,10 @@ const strippedPath = stripLocaleFromPath(Astro.url.pathname);
             label={displayName}
             variant="unstyle"
             className={cn(
-              'h-11 w-40 rounded-lg text-sm font-medium text-[#4056d6] transition-colors duration-200 dark:text-[#aeb8ff]',
+              'h-10 w-40 rounded-md text-sm font-medium text-[#4056d6] transition-colors duration-200 dark:text-[#aeb8ff]',
               {
-                'bg-[#eef1ff] dark:bg-[#5368e8]/18': item.path === strippedPath,
+                'bg-[#f5f6ff] ring-1 ring-[#e5e9ff] ring-inset dark:bg-[#5368e8]/14 dark:ring-[#6f80ec]/20':
+                  item.path === strippedPath,
                 'text-[#697386] hover:bg-[#f3f5f8] hover:text-[#4056d6] dark:text-[#9aa3b2] dark:hover:bg-white/6 dark:hover:text-[#aeb8ff]':
                   item.path !== strippedPath,
               },
@@ -155,6 +158,7 @@ const strippedPath = stripLocaleFromPath(Astro.url.pathname);
       })
     }
   </div>
+  )}
 </div>
 
 <style>

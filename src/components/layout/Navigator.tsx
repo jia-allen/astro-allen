@@ -28,7 +28,7 @@ const filteredRouters = filterNavItems(routers, configuredSeriesSlugs, enabledSe
 
 // Icon component for navigation items - uses @iconify/react for dynamic icons
 function NavIcon({ name }: { name: string }) {
-  return <Icon icon={name} className="mr-1.5 h-4 w-4" />;
+  return <Icon icon={name} className="mr-1 size-4 opacity-90" />;
 }
 
 // Button link component
@@ -45,10 +45,10 @@ function ButtonLink({ url, label, isActive, children }: ButtonLinkProps) {
       href={url}
       aria-label={label}
       className={cn(
-        'relative flex items-center px-3 py-2 text-base tracking-wider',
-        'after:absolute after:bottom-1 after:left-1/2 after:block after:h-0.5 after:w-0 after:-translate-x-1/2 after:transition-all after:duration-300',
-        'hover:after:w-9/12',
-        isActive && 'after:w-9/12',
+        'relative flex items-center px-2.5 py-2 font-medium text-[0.95rem] tracking-normal opacity-80 transition-opacity duration-200 hover:opacity-100',
+        'after:absolute after:bottom-0.5 after:left-1/2 after:block after:h-0.5 after:w-0 after:-translate-x-1/2 after:rounded-full after:transition-all after:duration-300',
+        'hover:after:w-7/12',
+        isActive && 'opacity-100 after:w-7/12',
       )}
     >
       {children}
@@ -58,7 +58,7 @@ function ButtonLink({ url, label, isActive, children }: ButtonLinkProps) {
 
 const Navigator = memo(function Navigator({ currentPath, locale = defaultLocale }: NavigatorProps) {
   const { isBeyond, direction } = useScrollTrigger({
-    triggerDistance: 0.45,
+    triggerDistance: 0.12,
     throttleMs: 80,
   });
 
@@ -109,7 +109,16 @@ const Navigator = memo(function Navigator({ currentPath, locale = defaultLocale 
         {filteredRouters.map((item) => {
           const displayName = resolveNavName(item.nameKey, item.name, locale);
           if (item.children?.length) {
-            return <DropdownNav key={item.path ?? item.name} item={item} currentPath={currentPath} locale={locale} />;
+            const isActive = item.children.some((child) => child.path === strippedPath);
+            return (
+              <DropdownNav
+                key={item.path ?? item.name}
+                item={item}
+                currentPath={currentPath}
+                locale={locale}
+                className={cn('opacity-80 hover:opacity-100', isActive && 'opacity-100 after:w-7/12')}
+              />
+            );
           }
           if (!item.path || !displayName) return null;
           const localizedUrl = item.localeIndependent ? item.path : localizedPath(item.path, locale);

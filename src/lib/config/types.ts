@@ -19,6 +19,12 @@ export interface SiteBasicConfig {
   author?: string;
   url: string;
   startYear?: number;
+  /** Site launch date in YYYY-MM-DD, used for the live site-day counter. */
+  establishedAt?: string;
+  /** Optional historical baseline added to public pageview statistics. */
+  siteVisitOffset?: number;
+  /** Optional historical baseline added to public visitor statistics. */
+  siteVisitorOffset?: number;
   defaultOgImage?: string;
   keywords?: string[];
   /** 面包屑导航中首页的显示名称 @default '首页' */
