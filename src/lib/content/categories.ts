@@ -2,7 +2,7 @@
  * Category-related utility functions
  */
 
-import { categoryMap } from '@lib/config/site';
+import { categoryMap, siteConfig } from '@lib/config/site';
 import { getContentFeaturedCategoryField, getContentSeriesField } from '@/i18n/content';
 import type { Locale } from '@/i18n/types';
 import { encodeSlug } from '../route';
@@ -30,6 +30,14 @@ export async function getCategoryList(locale?: string): Promise<CategoryListResu
     const allBlogPosts = await getSortedPosts(locale);
     const countMap: { [key: string]: number } = {}; // TODO: 需要优化，应该以分类路径为键名而不是 name 如数据结构既是根分类也是笔记-后端-数据结构。
     const resCategories: Category[] = [];
+
+    // Keep configured top-level modules visible and ordered before they receive their first article.
+    for (const category of siteConfig.featuredCategories ?? []) {
+      if (!category.link.includes('/') && category.label) {
+        countMap[category.label] = 0;
+        addCategoryRecursively(resCategories, [], category.label);
+      }
+    }
 
     // 统计每个分类的直接文章数量
     for (let i = 0; i < allBlogPosts.length; ++i) {

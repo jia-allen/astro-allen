@@ -39,6 +39,7 @@
     }
   }
 }
+
 @-webkit-keyframes move-forever {
   0% {
     -webkit-transform: translate(-90px, 0%);

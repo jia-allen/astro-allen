@@ -10,13 +10,13 @@ tags:
   - 未来
   - 职业规划
 categories:
-  - 技术分享
+  - 技术分析
 keywords:
   - Agent
   - 推荐
   - 未来
   - 职业规划
-  - 技术分享
+  - 技术分析
 ---
 
 ## AI Agent 基础知识：从 LLM、上下文、工具到 ReAct 循环

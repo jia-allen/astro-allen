@@ -10,14 +10,14 @@ tags:
   - 未来
   - 职业规划
 categories:
-  - 技术分享
+  - 技术分析
 sticky: true
 keywords:
   - Agent
   - 推荐
   - 未来
   - 职业规划
-  - 技术分享
+  - 技术分析
 ---
 
 ## Hermes Agent 使用指南：一个真正能动手的长期 AI 助手

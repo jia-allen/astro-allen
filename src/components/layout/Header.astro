@@ -17,11 +17,11 @@ interface Props {
 }
 
 const { isPostPage = false, tocNumbering = true } = Astro.props;
-const { alternate, avatar, title, showLogo } = siteConfig;
+const { alternate, title, showLogo } = siteConfig;
 const locale = getLocaleFromUrl(Astro.url.pathname);
 ---
 
-<RouteLoadingCover brand={alternate || title} caption={`${title} · 正在整理下一页`} avatar={avatar || '/img/avatar.png'} />
+<RouteLoadingCover brand="ALLEN" caption="知行录 · 正在整理下一页" avatar="/img/loading-avatar.jpg" />
 
 <div
   id="site-header"

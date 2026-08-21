@@ -1,34 +1,54 @@
 ---
 layout: ../layouts/PageLayout.astro
-title: "About"
+title: "关于 Allen"
 coverTitle: "关于我"
 date: 2025-01-03 01:01:33
-description: "关于我？"
+description: "前端出发，持续向全栈与 AI Agent 走去；也记录交易、生活和长期主义。"
 ---
 
-## 你好，这里是余弦
+## 你好，我是 Allen
 
-[![github badge](https://img.shields.io/badge/dynamic/json?color=blue&label=Github&query=%24.data.totalSubs&url=https%3A%2F%2Fapi.spencerwoo.com%2Fsubstats%2F%3Fsource%3Dgithub%26queryKey%3Dyusixian)](https://github.com/yusixian)
+这里是一间持续更新的个人工作台。
 
-cosine = 余弦 = cos
+我从前端出发，正在补齐后端、工程化与 AI Agent 的能力。除了写代码，也会记录交易、生活经验，以及那些不容易被量化、却会长期影响选择的思考。
 
-愿热情永存，愿热爱不灭，愿生活无憾
+> 知与行之间，差的往往不是更多道理，而是一次认真记录、一次持续实践。
 
-> 我们 都只是无名之辈 \
-> 做你自己最喜欢的事 \
-> 像花一样 肆意绽放 \
-> 不去管 有没有人欣赏
+## 我在做什么
 
-### 找到我
+### 从前端走向全栈
 
-个人 Telegram 前端频道：日常碎碎念，偶尔掉落优质前端博文推荐、学习资源等
+前端是我的起点。现在更关心一段功能如何从界面走到服务、数据与部署，也在通过真实项目补齐后端和系统设计的基础能力。
 
-https://t.me/cosine_front_end
+### 把 AI Agent 用到真实问题里
 
-Gitbook 前端学习记录
+我关注 LLM、上下文、工具调用与任务执行的关系。这里会留下学习笔记、实践过程和阶段性的判断，重点不是追逐概念，而是弄清它们如何真正帮助工作。
 
-https://book.cosine.ren/
+### 记录交易，也记录纪律
 
-[![GitHub State](https://git-stats.cosine.ren/api?username=yusixian&theme=dark&show_icons=true&hide_border=true)](https://github.com/anuraghazra/github-readme-stats)
+交易人生里的内容来自个人学习、复盘和模式整理。我更在意风险、纪律、仓位与长期一致性，而不是用几句结论替代独立判断。
 
-[![GitHub Streak](https://github-readme-streak-stats-rust-tau.vercel.app?user=yusixian&theme=dark&date_format=%5BY%20%5DM%20&hide_border=true)](https://git.io/streak-stats)
+> 本站交易内容仅作个人记录与交流，不构成任何投资建议。
+
+## 这里会写什么
+
+- **前端笔记 / 后端笔记**：技术学习、工程实践和问题复盘。
+- **技术分析**：AI Agent、LLM 与工具链的理解和实践。
+- **交易人生**：交易模式、纪律与认知的个人记录。
+- **随笔 / 精神底色**：对日常、选择和长期主义的思考。
+- **生活经验 / 面相与命理八字**：生活里遇到的事，以及仍在观察的问题。
+
+内容会不断修订。比起把每一次想法包装成结论，我更愿意把当下的理解、依据和边界写清楚。
+
+## 为什么写博客
+
+写作不是展示完成度，而是留下思考的来路。
+
+公开输出会倒逼我把模糊的理解说清楚，也让我在未来回看时，知道自己是怎样一点点改变判断、建立能力和走到这里的。
+
+写下来的，才会真正成为自己走过的路。
+
+## 找到我
+
+- GitHub：[github.com/jia-allen](https://github.com/jia-allen)
+- 邮箱：[2215090293@qq.com](mailto:2215090293@qq.com)

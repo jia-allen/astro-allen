@@ -9,7 +9,9 @@ import TwoColumnLayout from '@layouts/TwoColumnLayout.astro';
 import { toPostCardDataList } from '@lib/content/transforms';
 import type { Page } from 'astro';
 import type { BlogPost } from 'types/blog';
+import CategoryCards from '@/components/post/CategoryCards.astro';
 import Divider from '@/components/ui/divider';
+import { siteConfig } from '@/constants/site-config';
 import { t } from '@/i18n';
 import { postListRoute } from '../_shared/routes';
 
@@ -29,10 +31,16 @@ const postCardData = toPostCardDataList(page.data, locale);
     <Cover slot="cover" />
     <HomeSider slot="sider" />
     <div
-      class={`shadow-box bg-gradient-start tablet:shadow-none flex flex-col gap-4 overflow-hidden ${CONTENT_PADDING.standard}`}
+      class={`flex flex-col gap-5 overflow-hidden bg-[#f7f8fa] ${CONTENT_PADDING.standard} dark:bg-[#11131a]`}
     >
       <Divider>{t(locale, 'post.postList')}</Divider>
       <PostList posts={postCardData} page={page} />
+      {!!siteConfig?.featuredCategories?.length && (
+        <>
+          <Divider className="mt-6">{t(locale, 'post.featuredCategories')}</Divider>
+          <CategoryCards />
+        </>
+      )}
     </div>
   </TwoColumnLayout>
 </Layout>

@@ -55,13 +55,17 @@ const { brand, caption, avatar } = Astro.props;
       this.hidden = false;
       this.classList.remove('is-leaving');
       this.setAttribute('aria-hidden', 'false');
+
+      // Force the covered state to paint before the route is allowed to reveal the next page.
+      this.getBoundingClientRect();
     };
 
     private readonly finish = () => {
       if (this.hidden) return;
 
-      // Keep quick navigations visible long enough for the loading state to register.
-      const remaining = Math.max(0, 180 - (performance.now() - this.loadingStartedAt));
+      // Show the waiting state for one quick frame, then let the panel exit be
+      // the visible part of the route transition.
+      const remaining = Math.max(0, 80 - (performance.now() - this.loadingStartedAt));
       window.clearTimeout(this.leaveTimer);
       this.leaveTimer = window.setTimeout(() => {
         this.classList.add('is-leaving');
@@ -69,7 +73,7 @@ const { brand, caption, avatar } = Astro.props;
         this.hideTimer = window.setTimeout(() => {
           this.hidden = true;
           this.classList.remove('is-leaving');
-        }, 1350);
+        }, 1160);
       }, remaining);
     };
 
@@ -77,14 +81,14 @@ const { brand, caption, avatar } = Astro.props;
       if (this.listening) return;
       this.listening = true;
       document.addEventListener('astro:before-preparation', this.show);
-      document.addEventListener('astro:after-swap', this.finish);
+      document.addEventListener('astro:page-load', this.finish);
     }
 
     disconnectedCallback() {
       if (!this.listening) return;
       this.listening = false;
       document.removeEventListener('astro:before-preparation', this.show);
-      document.removeEventListener('astro:after-swap', this.finish);
+      document.removeEventListener('astro:page-load', this.finish);
       window.clearTimeout(this.hideTimer);
       window.clearTimeout(this.leaveTimer);
     }

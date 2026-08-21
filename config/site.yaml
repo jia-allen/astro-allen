@@ -60,26 +60,19 @@ i18n:
 # =============================================================================
 # Category Map
 # Maps Chinese category names to URL-friendly English slugs
-# Example: '随笔' category URL becomes /categories/life
+# Example: '随笔' category URL becomes /categories/essays
 # =============================================================================
 categoryMap:
-  # Primary categories
-  随笔: life
-  笔记: note
-  工具: tools
-  周刊: weekly
-  技术分享: technology
-  知行合一: reflections
+  随笔: essays
+  前端笔记: frontend-notes
+  后端笔记: backend-notes
+  技术分析: technology
+  交易人生: trading
+  面相与命理八字: face-reading-and-bazi
   生活经验: life-experience
-  股市心法: trading
-  # Secondary categories (for nested paths)
-  前端: front-end
-  Agent: agent
-  # Add more as needed:
-  # 书摘: reading
-  # 后端: back-end
-  # 算法: algorithm
-  # 项目: project
+  精神底色: reflections
+  # Featured series categories
+  周刊: weekly
 
 # =============================================================================
 # Featured Categories (Homepage)
@@ -92,22 +85,38 @@ categoryMap:
 #   description: 分类描述文字，显示在卡片上
 # -----------------------------------------------------------------------------
 featuredCategories:
-  - link: life # 对应 categoryMap 中 随笔: life
+  - link: essays
     label: 随笔
-    image: /img/cover/2.webp
-    description: 生活记录、随想随笔
-  - link: note # 对应 categoryMap 中 笔记: note
-    label: 笔记
     image: /img/cover/4.webp
-    description: 技术笔记、学习笔记
-  - link: note/front-end # 嵌套分类：笔记/前端
-    label: 前端
+    description: 日常观察、个人感受与自由表达
+  - link: frontend-notes
+    label: 前端笔记
     image: /img/cover/1.webp
-    description: 前端技术相关
-  - link: tools # 对应 categoryMap 中 工具: tools
-    label: 工具
+    description: 前端开发知识、踩坑记录与实践总结
+  - link: backend-notes
+    label: 后端笔记
     image: /img/cover/11.webp
-    description: 工具使用、效率提升
+    description: 服务端开发、数据存储与系统设计笔记
+  - link: technology
+    label: 技术分析
+    image: /img/cover/12.webp
+    description: 技术趋势、工具原理与深度分析
+  - link: trading
+    label: 交易人生
+    image: /img/cover/18.webp
+    description: 交易体系、市场认知与人生修炼
+  - link: face-reading-and-bazi
+    label: 面相与命理八字
+    image: /img/cover/14.webp
+    description: 面相观察、命理八字与传统文化研究
+  - link: life-experience
+    label: 生活经验
+    image: /img/cover/16.webp
+    description: 日常经验、生活记录与实用心得
+  - link: reflections
+    label: 精神底色
+    image: /img/cover/2.webp
+    description: 价值判断、认知成长与内在秩序
 
 # =============================================================================
 # Featured Series
@@ -136,7 +145,7 @@ featuredSeries:
       你可以用它来发布定期更新的系列内容，如技术周刊、读书笔记系列等。
       设置 enabled: false 可以关闭此功能。
     cover: /img/weekly_header.webp # 系列页面头图
-    enabled: true # 启用此系列
+    enabled: false # 启用此系列
     icon: ri:newspaper-line # 导航图标
     links: # 相关链接（可选）
       github: https://github.com/your-username/your-repo # (可选) GitHub 仓库
@@ -167,17 +176,13 @@ featuredSeries:
 # -----------------------------------------------------------------------------
 social:
   github:
-    url: https://github.com/your-username # 替换为你的 GitHub 链接
+    url: https://github.com/jia-allen
     icon: ri:github-fill # Remix Icon 的 GitHub 图标
     color: '#191717' # (可选) 图标颜色
   email:
-    url: mailto:your@email.com # 替换为你的邮箱，需加 mailto: 前缀
+    url: mailto:2215090293@qq.com
     icon: ri:mail-line
     color: '#55acd5'
-  rss:
-    url: /rss.xml # 站内 RSS 订阅地址
-    icon: ri:rss-line
-    color: '#ff6600'
   # -------------------------------------------------------------------------
   # 以下是更多可选的社交平台配置示例，取消注释并修改即可启用：
   # -------------------------------------------------------------------------

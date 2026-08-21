@@ -17,7 +17,7 @@
   width: 100%;
   height: 100%;
   will-change: transform;
-  transition: transform 1.05s cubic-bezier(0.72, 0, 0.18, 1);
+  transition: transform 0.95s cubic-bezier(0.72, 0, 0.18, 1);
 }
 
 .route-loading-cover__pattern {
@@ -45,6 +45,7 @@
   gap: 0.35rem;
   padding: 2rem;
   background: #fff;
+  transition-delay: 0s;
 }
 
 .route-loading-cover.is-leaving {
@@ -57,7 +58,7 @@
 }
 
 .route-loading-cover.is-leaving .route-loading-cover__pattern {
-  transition-delay: 0.22s;
+  transition-delay: 0.16s;
 }
 
 .route-loading-cover__progress {
@@ -198,7 +199,7 @@
 
 .route-loading-cover__caption {
   margin: 0;
-  color: #64748b;
+  color: #94a3b8;
   font-size: 0.8rem;
   letter-spacing: 0;
 }
@@ -206,6 +207,10 @@
 .dark .route-loading-cover__main,
 .dark .route-loading-cover__window {
   background: #1e1e1e;
+}
+
+.dark .route-loading-cover {
+  background: #18171d;
 }
 
 .dark .route-loading-cover__title {

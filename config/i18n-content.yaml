@@ -13,11 +13,15 @@
 
 en:
   categories:
-    life: Life
-    note: Notes
-    tools: Tools
+    essays: Essays
+    frontend-notes: Frontend Notes
+    backend-notes: Backend Notes
+    technology: Tech Analysis
+    trading: Trading Life
+    face-reading-and-bazi: Face Reading & Bazi
+    life-experience: Life Experience
+    reflections: Inner Foundation
     weekly: Weekly
-    front-end: Frontend
 
   series:
     weekly:
@@ -25,26 +29,42 @@ en:
       fullName: My Tech Weekly
 
   featuredCategories:
-    life:
-      label: Life
-      description: Life journals and essays
-    note:
-      label: Notes
-      description: Technical and study notes
-    note/front-end:
-      label: Frontend
-      description: Frontend technologies
-    tools:
-      label: Tools
-      description: Tool usage and productivity
+    essays:
+      label: Essays
+      description: Everyday observations, personal feelings, and free expression
+    frontend-notes:
+      label: Frontend Notes
+      description: Frontend knowledge, troubleshooting, and practical lessons
+    backend-notes:
+      label: Backend Notes
+      description: Backend development, data storage, and system design notes
+    technology:
+      label: Tech Analysis
+      description: Technology trends, tool internals, and in-depth analysis
+    trading:
+      label: Trading Life
+      description: Trading systems, market insights, and personal discipline
+    face-reading-and-bazi:
+      label: Face Reading & Bazi
+      description: Face reading, Bazi, and traditional cultural studies
+    life-experience:
+      label: Life Experience
+      description: Everyday experience, notes, and practical tips
+    reflections:
+      label: Inner Foundation
+      description: Values, personal growth, and inner order
 
 ja:
   categories:
-    life: 日常
-    note: ノート
-    tools: ツール
+    essays: 随筆
+    frontend-notes: フロントエンドノート
+    backend-notes: バックエンドノート
+    technology: 技術分析
+    trading: 取引人生
+    face-reading-and-bazi: 人相と八字命理
+    life-experience: 生活の知恵
+    reflections: 精神の基盤
     weekly: 週刊
-    front-end: フロントエンド
 
   series:
     weekly:
@@ -52,15 +72,27 @@ ja:
       fullName: テック週間ダイジェスト
 
   featuredCategories:
-    life:
-      label: 日常
-      description: 日常の記録とエッセイ
-    note:
-      label: ノート
-      description: 技術と学習のノート
-    note/front-end:
-      label: フロントエンド
-      description: フロントエンド技術
-    tools:
-      label: ツール
-      description: ツールの使い方と生産性
+    essays:
+      label: 随筆
+      description: 日常の観察、個人の感情、自由な表現
+    frontend-notes:
+      label: フロントエンドノート
+      description: フロントエンド開発の知識、問題解決、実践のまとめ
+    backend-notes:
+      label: バックエンドノート
+      description: サーバー開発、データ保存、システム設計のノート
+    technology:
+      label: 技術分析
+      description: 技術動向、ツールの仕組み、詳細な分析
+    trading:
+      label: 取引人生
+      description: 取引体系、市場理解、人生の修練
+    face-reading-and-bazi:
+      label: 人相と八字命理
+      description: 人相、八字命理、伝統文化の研究
+    life-experience:
+      label: 生活の知恵
+      description: 日常の経験、記録、実用的なヒント
+    reflections:
+      label: 精神の基盤
+      description: 価値判断、認知の成長、内面の秩序

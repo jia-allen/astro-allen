@@ -59,7 +59,7 @@ const page: Page<BlogPost> = {
     <Cover slot="cover" />
     <HomeSider slot="sider" />
     <div
-      class={`bg-gradient-start shadow-box tablet:shadow-none flex flex-col gap-4 overflow-hidden  ${CONTENT_PADDING.standard}`}
+      class={`flex flex-col gap-5 overflow-hidden bg-[#f7f8fa] ${CONTENT_PADDING.standard} dark:bg-[#11131a]`}
     >
       {stickyPosts.length > 0 && (
         <>

@@ -1,6 +1,5 @@
 ---
 import { Badge } from '@components/ui/badge';
-import { Button } from '@components/ui/button';
 import { categoryMap } from '@constants/category';
 import { Routes } from '@constants/router';
 import { siteConfig } from '@constants/site-config';
@@ -80,12 +79,12 @@ const categoryPosts: CategoryWithPosts[] = await Promise.all(
               </Badge>
             ) : null}
           </div>
-          <div slot="back" class="bg-card relative h-full flex-col rounded-md px-6 pt-16 pb-4">
+          <div slot="back" class="bg-card relative h-full flex-col rounded-md border border-[#e7eaf0] px-6 pt-16 pb-4 dark:border-white/10">
             <div
               class={cn(
-                'from-gradient-shoka-button-start to-gradient-shoka-button-end absolute top-4 -left-4 grid h-8 max-w-[calc(100%+2rem)] place-items-center rounded-r-md bg-linear-to-l px-4',
+                'absolute top-4 -left-4 grid h-8 max-w-[calc(100%+2rem)] place-items-center rounded-r-md bg-[#5368e8] px-4',
                 "after:absolute after:top-full after:-left-4 after:h-0 after:w-0 after:border-t-0 after:border-r-16 after:border-b-16 after:border-l-16 after:border-transparent after:content-['']",
-                'after:border-r-gradient-shoka-button-end',
+                'after:border-r-[#4056d6]',
               )}
             >
               <a class="hover:animate-vertical-shake block text-base text-white" href={categoryLink}>
@@ -130,14 +129,13 @@ const categoryPosts: CategoryWithPosts[] = await Promise.all(
                 {t(locale, 'category.postCount', { count: category.posts?.length ?? 0 })}
               </Fragment>
             </p>
-            <a href={categoryLink} aria-label="more info" class="absolute right-0 bottom-0">
-              <Button
-                className={cn(
-                  'bg-gradient-shoka-button rounded-2xl rounded-se-none rounded-es-none transition-all hover:translate-x-1 hover:translate-y-1 hover:scale-105 md:h-7 md:px-2 md:py-1 md:text-xs',
-                )}
-              >
-                more...
-              </Button>
+            <a
+              href={categoryLink}
+              aria-label="more info"
+              class="absolute right-5 bottom-4 flex items-center gap-1 text-xs font-semibold text-[#5368e8] transition-colors duration-200 hover:text-[#4056d6] dark:text-[#9bacff] dark:hover:text-[#b9c3ff]"
+            >
+              <span>{locale === 'en' ? 'View' : locale === 'ja' ? '見る' : '查看'}</span>
+              <Icon name="ri:arrow-right-line" class="size-4" />
             </a>
           </div>
         </FlippedCard>
