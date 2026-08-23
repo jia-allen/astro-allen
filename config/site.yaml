@@ -63,10 +63,10 @@ i18n:
 # =============================================================================
 # Category Map
 # Maps Chinese category names to URL-friendly English slugs
-# Example: '随笔' category URL becomes /categories/essays
+# Example: '生活记录' category URL becomes /categories/life-records
 # =============================================================================
 categoryMap:
-  随笔: essays
+  生活记录: life-records
   前端笔记: frontend-notes
   后端笔记: backend-notes
   技术分析: technology
@@ -88,10 +88,10 @@ categoryMap:
 #   description: 分类描述文字，显示在卡片上
 # -----------------------------------------------------------------------------
 featuredCategories:
-  - link: essays
-    label: 随笔
+  - link: life-records
+    label: 生活记录
     image: /img/cover/4.webp
-    description: 日常观察、个人感受与自由表达
+    description: 周度小记、月度回顾与那些平凡却珍贵的日子
   - link: frontend-notes
     label: 前端笔记
     image: /img/cover/1.webp

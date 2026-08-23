@@ -692,7 +692,7 @@ export interface SiteYamlConfig {
   analytics?: AnalyticsConfig;
   /** SEO configuration for robots.txt and meta tags */
   seo?: SeoConfig;
-  categoryMap?: Record<string, string>; // TODO: i18n, now use eg: { '随笔': 'life' }
+  categoryMap?: Record<string, string>; // TODO: i18n, now use eg: { '生活记录': 'life-records' }
   /** Background music player configuration */
   bgm?: BgmConfig;
   /** Bangumi media tracking page — comment out to disable */

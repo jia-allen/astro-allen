@@ -14,7 +14,7 @@ import { enabledFeaturedSeriesSlugs, normalizeFeaturedSeries } from './featured-
 import { RESERVED_ROUTES } from './reserved-routes';
 import type { I18nConfig, ResolvedContentConfig, ResolvedSiteConfig } from './types';
 
-/** Category name → URL slug map, e.g. `{ '随笔': 'life' }`. */
+/** Category name → URL slug map, e.g. `{ '生活记录': 'life-records' }`. */
 export const categoryMap: Record<string, string> = yamlConfig.categoryMap ?? {};
 
 /** Validated featured series, always an array with lowercase slugs. */
