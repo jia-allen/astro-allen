@@ -3,7 +3,7 @@ title: "Hermes Agent：真正能动手的长期 AI 助手"
 link: agent-hermes
 catalog: true
 date: 2026-07-12 00:00:00
-description: "Hermes Agent 更像一个可以长期协作的数字同事：它不只生成文字，还能读取文件、修改代码、执行命令、查询网页、管理 GitHub，并在完成任务后运行测试验证结果。我更愿意把它理解成：大模型负责思考，Hermes 负责记忆、工具调用和实际执行。"
+description: "Hermes Agent 更像一个可以长期协作的数字同事：它不只生成文字，还能读取文件、修改代码、执行命令、查询网页、管理 GitHub，并在完成任务后运行测试验证结果。大模型负责思考，Hermes 负责记忆、工具调用和实际执行。"
 tags:
   - Agent
   - 推荐
@@ -11,7 +11,6 @@ tags:
   - 职业规划
 categories:
   - 技术分析
-sticky: true
 keywords:
   - Agent
   - 推荐
