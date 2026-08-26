@@ -93,6 +93,8 @@ export const uiStrings = {
 
   // ── Friends ─────────────────────────────────────────────────
   'friends.title': '友情链接',
+  'friends.emptyTitle': '暂时还没有友链',
+  'friends.emptyDesc': '有新的站点，再来这里见。',
   'friends.applyTitle': '申请友链',
   'friends.siteName': '站点名称',
   'friends.siteUrl': '站点地址',

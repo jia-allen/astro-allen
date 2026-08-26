@@ -94,6 +94,8 @@ export const uiStrings: UIStrings = {
 
   // ── 友達 ─────────────────────────────────────────────────
   'friends.title': '友達',
+  'friends.emptyTitle': 'まだ友達リンクはありません',
+  'friends.emptyDesc': '新しいリンクはここに表示されます。',
   'friends.applyTitle': '友達のリンクに適用',
   'friends.siteName': 'サイト名',
   'friends.siteUrl': 'サイトのURL',

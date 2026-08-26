@@ -94,6 +94,8 @@ export const uiStrings: UIStrings = {
 
   // ── Friends ─────────────────────────────────────────────────
   'friends.title': 'Friends',
+  'friends.emptyTitle': 'No friend links yet',
+  'friends.emptyDesc': 'New connections will appear here.',
   'friends.applyTitle': 'Apply for Friend Link',
   'friends.siteName': 'Site Name',
   'friends.siteUrl': 'Site URL',
