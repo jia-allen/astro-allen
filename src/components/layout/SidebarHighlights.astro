@@ -1,8 +1,8 @@
 ---
 import { siteConfig } from '@constants/site-config';
-import { buildTagPath } from '@lib/content';
+import { buildCategoryPath, buildTagPath, translateCategoryName } from '@lib/content';
 import { Icon } from 'astro-icon/components';
-import { localizedPath } from '@/i18n';
+import { type Locale, localizedPath } from '@/i18n';
 
 interface TagCount {
   tag: string;
@@ -10,12 +10,25 @@ interface TagCount {
 }
 
 interface Props {
-  locale: string;
+  locale: Locale;
   tags: TagCount[];
+  categoryCounts: Record<string, number>;
   postCount: number;
 }
 
-const { locale, tags, postCount } = Astro.props;
+const { locale, tags, categoryCounts, postCount } = Astro.props;
+
+const contentCategoryNames = [
+  '生活记录',
+  '前端笔记',
+  '后端笔记',
+  '技术分析',
+  '交易人生',
+  '面相与命理八字',
+  '生活经验',
+  '精神底色',
+];
+const contentCategories = contentCategoryNames.map((name) => ({ name, count: categoryCounts[name] ?? 0 }));
 
 const copy =
   locale === 'en'
@@ -23,29 +36,32 @@ const copy =
         roadmapTitle: 'Growth path',
         roadmapDescription: 'Frontend · Backend · AI Agent',
         roadmapAction: 'View career plan',
-        manifestoEyebrow: "ALLEN'S NOTE",
-        manifestoTitle: 'Why I write',
-        manifestoCopy: 'Public writing turns learning into lasting credit. What gets written down becomes part of the path.',
-        tagTitle: 'Current threads',
+        manifestoEyebrow: 'CONTENT INDEX',
+        manifestoTitle: 'Content directory',
+        manifestoCopy: 'Most new notes will fit into these eight paths.',
+        categoryTitle: 'Content directories',
+        tagTitle: 'Common tags',
       }
     : locale === 'ja'
       ? {
           roadmapTitle: '成長ルート',
           roadmapDescription: 'Frontend · Backend · AI Agent',
           roadmapAction: 'キャリアプランを見る',
-          manifestoEyebrow: "ALLEN'S NOTE",
-          manifestoTitle: 'なぜ書くのか',
-          manifestoCopy: '公開して書き続けることで、学びは長期的な信用になる。書き残したものが、自分の歩みになる。',
-          tagTitle: 'いま考えていること',
+          manifestoEyebrow: 'CONTENT INDEX',
+          manifestoTitle: 'コンテンツ分類',
+          manifestoCopy: 'これからの記録は、この8つの方向に分けて整理します。',
+          categoryTitle: 'コンテンツ分類',
+          tagTitle: 'よく読むタグ',
         }
       : {
           roadmapTitle: '成长路线',
           roadmapDescription: '前端 · 后端 · AI Agent',
           roadmapAction: '查看职业规划',
-          manifestoEyebrow: "ALLEN'S NOTE",
-          manifestoTitle: '为什么写博客',
-          manifestoCopy: '持续公开输出，让学习沉淀为长期信用。写下来的，才会真正成为自己走过的路。',
-          tagTitle: '正在沉淀',
+          manifestoEyebrow: '内容索引',
+          manifestoTitle: '内容目录',
+          manifestoCopy: '后续内容主要围绕这 8 个方向更新。',
+          categoryTitle: '八个方向',
+          tagTitle: '常用标签',
         };
 ---
 
@@ -109,25 +125,37 @@ const copy =
   </site-analytics>
 
   <section class="border-border/70 bg-card/60 w-full rounded-lg border px-4 py-4 text-left shadow-sm">
-    <div class="flex items-center gap-3">
-      <span class="grid size-9 shrink-0 place-items-center rounded-full bg-[#5368e8] font-serif text-base font-bold text-white">A</span>
-      <div class="min-w-0">
-        <p class="text-[0.65rem] font-bold text-[#5368e8] dark:text-[#9bacff]">{copy.manifestoEyebrow}</p>
-        <h2 class="text-primary mt-1 text-base/5 font-bold">{copy.manifestoTitle}</h2>
-      </div>
+    <div class="border-l-2 border-[#5368e8] pl-3 dark:border-[#9bacff]">
+      <p class="text-[0.65rem] font-bold tracking-[0.08em] text-[#5368e8] dark:text-[#9bacff]">{copy.manifestoEyebrow}</p>
+      <h2 class="text-primary mt-1 text-base/5 font-bold">{copy.manifestoTitle}</h2>
     </div>
     <p class="text-muted-foreground mt-3 text-sm/6">{copy.manifestoCopy}</p>
 
+    <div class="border-border/70 mt-4 border-t border-dashed pt-3">
+      <p class="text-muted-foreground mb-2 text-xs font-medium">{copy.categoryTitle}</p>
+      <nav class="flex flex-col gap-0.5" aria-label={copy.categoryTitle}>
+        {contentCategories.map(({ name, count }) => (
+          <a
+            href={localizedPath(buildCategoryPath(name), locale)}
+            class="text-muted-foreground hover:text-blue group flex min-w-0 items-center justify-between gap-2 rounded-md px-2 py-1.5 text-sm transition-colors focus-visible:outline-none"
+          >
+            <span class="truncate">{translateCategoryName(name, locale)}</span>
+            <span class="shrink-0 text-xs text-[#5368e8]/70 dark:text-[#aeb8ff]/80">{count}</span>
+          </a>
+        ))}
+      </nav>
+    </div>
+
     {tags.length > 0 && (
-      <div class="border-border/70 mt-4 border-t border-dashed pt-3">
+      <div class="border-border/70 mt-3 border-t border-dashed pt-3">
         <p class="text-muted-foreground mb-2 text-xs font-medium">{copy.tagTitle}</p>
-        <nav class="flex flex-wrap gap-x-3 gap-y-2" aria-label={copy.tagTitle}>
+        <nav class="flex flex-wrap gap-1.5" aria-label={copy.tagTitle}>
           {tags.map(({ tag, count }) => (
             <a
               href={localizedPath(buildTagPath(tag), locale)}
-              class="text-primary hover:text-blue focus-visible:text-blue text-sm transition-colors focus-visible:outline-none"
+              class="text-muted-foreground hover:text-blue focus-visible:text-blue inline-flex items-baseline rounded-md bg-black/[0.035] px-2 py-1 text-sm transition-colors focus-visible:outline-none dark:bg-white/[0.06]"
             >
-              {tag}<sup class="text-muted-foreground ml-0.5 text-[0.65rem]">{count}</sup>
+              {tag}<sup class="ml-1 text-[0.65rem] text-[#5368e8]/70 dark:text-[#aeb8ff]/80">{count}</sup>
             </a>
           ))}
         </nav>

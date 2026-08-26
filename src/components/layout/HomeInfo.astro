@@ -73,7 +73,7 @@ const strippedPath = stripLocaleFromPath(Astro.url.pathname);
       {t(locale, 'homeInfo.tags')}
     </a>
   </div>
-  <SidebarHighlights locale={locale} tags={featuredTags} postCount={postCount} />
+  <SidebarHighlights locale={locale} tags={featuredTags} categoryCounts={countMap} postCount={postCount} />
   {isDrawer && (
   <div class="mt-5 flex w-full flex-col items-center gap-2">
     {

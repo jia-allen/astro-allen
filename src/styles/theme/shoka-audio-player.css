@@ -307,6 +307,11 @@
   border-bottom: 3px solid #888;
 }
 
+/* Music page: give the full playlist enough room to scan more tracks at once. */
+.audio-player:not(.bgm-panel-player) .audio-player-song-list {
+  max-height: 520px;
+}
+
 /* -- Tonearm dark mode overrides ------------------------------------------ */
 .dark .audio-player-needle::before {
   background:
@@ -446,5 +451,9 @@
     width: 9px;
     height: 14px;
     border-bottom-width: 2px;
+  }
+
+  .audio-player:not(.bgm-panel-player) .audio-player-song-list {
+    max-height: 320px;
   }
 }
